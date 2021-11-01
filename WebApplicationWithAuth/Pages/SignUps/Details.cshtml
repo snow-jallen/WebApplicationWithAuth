@@ -26,6 +26,10 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.SignUp.Id">Edit</a> |
+    @if (Model.CanEdit)
+    {
+        <a asp-page="./Edit" asp-route-id="@Model.SignUp.Id">Edit</a> 
+        <span>|</span>
+    }
     <a asp-page="./Index">Back to List</a>
 </div>

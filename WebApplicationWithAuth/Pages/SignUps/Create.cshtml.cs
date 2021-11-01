@@ -10,21 +10,18 @@ using WebApplicationWithAuth.Data;
 
 namespace WebApplicationWithAuth.Pages.SignUps
 {
-    //[Authorize(Policy = "IsSnowUser")]
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly IAuthorizationService authorizationService;
 
-        public CreateModel(ApplicationDbContext context, IAuthorizationService authorizationService)
+        public CreateModel(ApplicationDbContext context)
         {
             _context = context;
-            this.authorizationService = authorizationService;
         }
 
         public async Task<IActionResult> OnGet()
         {
-            var result = await authorizationService.AuthorizeAsync(User, "IsSnowUser");
             ViewData["PartyId"] = new SelectList(_context.Parties, "Id", "Id");
             return Page();
         }

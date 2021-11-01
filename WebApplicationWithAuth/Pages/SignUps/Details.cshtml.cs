@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -11,17 +12,24 @@ namespace WebApplicationWithAuth.Pages.SignUps
 {
     public class DetailsModel : PageModel
     {
-        private readonly WebApplicationWithAuth.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
+        private readonly IAuthorizationService authorizationService;
 
-        public DetailsModel(WebApplicationWithAuth.Data.ApplicationDbContext context)
+        public DetailsModel(ApplicationDbContext context, IAuthorizationService authorizationService)
         {
             _context = context;
+            this.authorizationService = authorizationService;           
         }
+
+        public bool CanEdit { get; set; }
 
         public SignUp SignUp { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var authResult = await authorizationService.AuthorizeAsync(User, AuthPolicies.IsAdmin);
+            CanEdit = authResult.Succeeded;
+
             if (id == null)
             {
                 return NotFound();
