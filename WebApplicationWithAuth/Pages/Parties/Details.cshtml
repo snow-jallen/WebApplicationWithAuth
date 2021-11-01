@@ -30,6 +30,28 @@
             @Html.DisplayFor(model => model.Party.StartsOn)
         </dd>
     </dl>
+    <h5>Sign-Ups:</h5>
+    @foreach (var signup in Model.Party.SignUps)
+    {
+        <strong>@signup.Name</strong>
+        <h6>Food Assignments</h6>
+        @if (signup.FoodAssignments.Any())
+        {
+            <ul class="ml-3">
+                @foreach (var foodAssignment in signup.FoodAssignments)
+                {
+                    <li>
+                        @foodAssignment.FoodName (@foodAssignment.Quantity @foodAssignment.Units)
+                        <p class="ml-3">@foodAssignment.Notes</p>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        { 
+            <div>No food assignments...yet.</div>
+        }
+    }
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Party.Id">Edit</a> |

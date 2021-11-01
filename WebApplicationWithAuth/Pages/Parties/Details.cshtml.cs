@@ -27,7 +27,7 @@ namespace WebApplicationWithAuth.Pages.Parties
                 return NotFound();
             }
 
-            Party = await _context.Parties.FirstOrDefaultAsync(m => m.Id == id);
+            Party = await _context.Parties.Include(p=>p.SignUps).ThenInclude(s=>s.FoodAssignments).FirstOrDefaultAsync(m => m.Id == id);
 
             if (Party == null)
             {

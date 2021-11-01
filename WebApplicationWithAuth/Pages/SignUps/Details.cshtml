@@ -24,6 +24,44 @@
             @Html.DisplayFor(model => model.SignUp.Party.Id)
         </dd>
     </dl>
+    <h6>Food Assignments</h6>
+    <form method="post">
+        <div class="mb-3 row">
+            <div class="col-sm-4 text-sm-end align-self-center">
+                <label class="form-label" asp-for="NewFoodAssignment.FoodName"></label>
+            </div>
+            <div class="col">
+                <input class="form-control" asp-for="NewFoodAssignment.FoodName" />
+                <span class="form-text" asp-validation-for="NewFoodAssignment.FoodName"></span>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <div class="col-sm-4 text-sm-end align-self-center">
+                <label class="form-label" asp-for="NewFoodAssignment.Units"></label>
+            </div>
+            <div class="col">
+                <input class="form-control" asp-for="NewFoodAssignment.Units" />
+                <span class="form-text" asp-validation-for="NewFoodAssignment.Units"></span>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <div class="col-sm-4 text-sm-end align-self-center">
+                <label class="form-label" asp-for="NewFoodAssignment.Quantity"></label>
+            </div>
+            <div class="col">
+                <input class="form-control" asp-for="NewFoodAssignment.Quantity" />
+                <span class="form-text" asp-validation-for="NewFoodAssignment.Quantity" />
+            </div>
+        </div>
+        <input type="hidden" name="signupId" value="@Model.SignUp.Id" />        
+        <div class="row">
+            <div class="col-sm-4 text-sm-end align-self-center">
+            </div>
+            <div class="col-8">
+                <button type="submit" class="btn btn-outline-primary">Add Food Assignment</button>
+            </div>
+        </div>
+    </form>
 </div>
 <div>
     @if (Model.CanEdit)

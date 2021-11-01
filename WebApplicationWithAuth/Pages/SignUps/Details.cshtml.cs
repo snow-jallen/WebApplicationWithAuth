@@ -25,6 +25,9 @@ namespace WebApplicationWithAuth.Pages.SignUps
 
         public SignUp SignUp { get; set; }
 
+        [BindProperty]
+        public FoodAssignment NewFoodAssignment { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             var authResult = await authorizationService.AuthorizeAsync(User, AuthPolicies.IsAdmin);
@@ -41,6 +44,18 @@ namespace WebApplicationWithAuth.Pages.SignUps
             if (SignUp == null)
             {
                 return NotFound();
+            }
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPost(int signupId)
+        {
+            if(ModelState.IsValid)
+            {
+                var signup = await _context.SignUps.Include(s => s.FoodAssignments).FirstOrDefaultAsync(s => s.Id == signupId);
+                signup.FoodAssignments.Add(NewFoodAssignment);
+                await _context.SaveChangesAsync();
+                return RedirectToPage(signupId);
             }
             return Page();
         }
