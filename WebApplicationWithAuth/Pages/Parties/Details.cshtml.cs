@@ -30,7 +30,10 @@ namespace WebApplicationWithAuth.Pages.Parties
                 return NotFound();
             }
 
-            Party = await _context.Parties.Include(p => p.SignUps).ThenInclude(s => s.FoodAssignments).FirstOrDefaultAsync(m => m.Name.ToLower() == partyName.ToLower());
+            Party = await _context.Parties
+                .Include(p => p.SignUps)
+                .ThenInclude(s => s.FoodAssignments)
+                .FirstOrDefaultAsync(m => m.Name.ToLower() == partyName.ToLower());
 
             if (Party == null)
             {
@@ -50,7 +53,7 @@ namespace WebApplicationWithAuth.Pages.Parties
 
             return RedirectToPage(new { partyName = partyName });
         }
-        
+
         public async Task<IActionResult> OnPostDeleteAssignmentAsync(int assignmentId, string partyName)
         {
             var foodAssignment = await _context.FoodAssignments.FindAsync(assignmentId);
