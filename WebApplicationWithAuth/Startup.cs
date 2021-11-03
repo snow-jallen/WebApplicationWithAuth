@@ -40,6 +40,7 @@ namespace WebApplicationWithAuth
                 options.Conventions.AuthorizePage("/SignUps/Delete");
                 options.Conventions.AuthorizeFolder("/Parties");
             });
+            services.AddServerSideBlazor();
             services.AddControllers();
             services.AddAuthorization(options =>
             {
@@ -74,7 +75,9 @@ namespace WebApplicationWithAuth
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapBlazorHub();
                 endpoints.MapControllers();
+                endpoints.MapFallbackToPage("/_Host");
             });
         }
     }

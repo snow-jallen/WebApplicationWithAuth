@@ -1,0 +1,12 @@
+﻿
+<h1>@Party.Name</h1>
+@foreach (var s in Party.SignUps)
+{
+    <SignupComponent SignUp="@s" />
+}
+
+@code {
+
+    [Parameter]
+    public WebApplicationWithAuth.Data.Party Party { get; set; }
+}

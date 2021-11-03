@@ -6,6 +6,10 @@
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
 
+  <!--<ItemGroup>
+    <Content Remove="Pages\App.razor" />
+  </ItemGroup>-->
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.11" />
@@ -16,5 +20,17 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
   </ItemGroup>
+
+  <!--<ItemGroup>
+    <UpToDateCheckInput Remove="Pages\App.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\App.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\App.razor" />
+  </ItemGroup>-->
 
 </Project>

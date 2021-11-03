@@ -1,0 +1,12 @@
+﻿@page "/time"
+
+<h1>@time</h1>
+
+@code {
+    private DateTime time;
+
+    protected override void OnInitialized()
+    {
+        time = DateTime.Now;
+    }
+}

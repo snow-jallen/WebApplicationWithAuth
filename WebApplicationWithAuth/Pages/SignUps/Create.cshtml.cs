@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using WebApplicationWithAuth.Data;
 
 namespace WebApplicationWithAuth.Pages.SignUps
@@ -20,9 +21,9 @@ namespace WebApplicationWithAuth.Pages.SignUps
             _context = context;
         }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            ViewData["PartyId"] = new SelectList(_context.Parties, "Id", "Name");
+            ViewData["PartyId"] = new SelectList(await _context.Parties.ToListAsync(), "Id", "Name");
             return Page();
         }
 

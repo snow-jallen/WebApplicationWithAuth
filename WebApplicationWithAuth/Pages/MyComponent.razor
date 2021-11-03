@@ -1,0 +1,30 @@
+﻿@page "/blazor"
+@using WebApplicationWithAuth.Data
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext dbContext
+
+<h1>Parties</h1>
+@if (Parties != null)
+{
+    foreach (var p in Parties)
+    {
+        <PartyComponent Party="@p" />
+    }
+}
+
+@code
+{
+    IEnumerable<Party> Parties { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Parties = await dbContext.Parties.Include(p => p.SignUps).ThenInclude(s => s.FoodAssignments).ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+}

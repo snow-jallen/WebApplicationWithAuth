@@ -1,0 +1,10 @@
+﻿<h3>@SignUp.Name</h3>
+@foreach (var fa in SignUp.FoodAssignments)
+{
+    <FoodAssignmentComponent FoodAssignment="@fa" />
+}
+
+@code {
+    [Parameter]
+    public WebApplicationWithAuth.Data.SignUp SignUp { get; set; }
+}
