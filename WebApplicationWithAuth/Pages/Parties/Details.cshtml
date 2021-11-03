@@ -37,8 +37,11 @@
                                 <form method="post">
                                     @foodAssignment.FoodName (@foodAssignment.Quantity @foodAssignment.Units)
                                     <button asp-page-handler="DeleteAssignment" asp-route-assignmentId="@foodAssignment.Id" asp-route-partyName="@Model.Party.Name">❌</button>
+                                    <input name="notes" value="@foodAssignment.Notes" class="ml-3" />
+                                    <br/>
+                                    <button asp-page-handler="AddNotes" asp-route-assignmentId="@foodAssignment.Id" asp-route-partyName="@Model.Party.Name">Add Notes</button>
                                 </form>
-                                <p class="ml-3">@foodAssignment.Notes</p>
+                                <p class="text-info">@(foodAssignment.LastEditedOn?.ToString() ?? "[Not Edited Yet]")</p>
                             </li>
 
                         }

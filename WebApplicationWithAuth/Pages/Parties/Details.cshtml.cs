@@ -50,13 +50,26 @@ namespace WebApplicationWithAuth.Pages.Parties
 
             return RedirectToPage(new { partyName = partyName });
         }
-
+        
         public async Task<IActionResult> OnPostDeleteAssignmentAsync(int assignmentId, string partyName)
         {
             var foodAssignment = await _context.FoodAssignments.FindAsync(assignmentId);
             if (foodAssignment != null)
             {
                 foodAssignment.IsDeleted = true;
+                foodAssignment.LastEditedOn = DateTime.Now;
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToPage(new { partyName = partyName });
+        }
+
+        public async Task<IActionResult> OnPostAddNotesAsync(string notes, int assignmentId, string partyName)
+        {
+            var foodAssignment = await _context.FoodAssignments.FindAsync(assignmentId);
+            if (foodAssignment != null)
+            {
+                foodAssignment.Notes = notes;
+                foodAssignment.LastEditedOn = DateTime.Now;
                 await _context.SaveChangesAsync();
             }
             return RedirectToPage(new { partyName = partyName });

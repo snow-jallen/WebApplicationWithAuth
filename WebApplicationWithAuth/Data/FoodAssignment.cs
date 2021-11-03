@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplicationWithAuth.Data
 {
@@ -13,5 +14,6 @@ namespace WebApplicationWithAuth.Data
         public int SignUpId { get; set; }
         public SignUp SignUp { get; set; }
         public bool IsDeleted { get; set; } = false;
+        public DateTime? LastEditedOn { get; internal set; }
     }
 }
