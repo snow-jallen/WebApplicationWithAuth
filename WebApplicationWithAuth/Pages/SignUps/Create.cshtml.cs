@@ -22,7 +22,7 @@ namespace WebApplicationWithAuth.Pages.SignUps
 
         public async Task<IActionResult> OnGet()
         {
-            ViewData["PartyId"] = new SelectList(_context.Parties, "Id", "Id");
+            ViewData["PartyId"] = new SelectList(_context.Parties, "Id", "Name");
             return Page();
         }
 

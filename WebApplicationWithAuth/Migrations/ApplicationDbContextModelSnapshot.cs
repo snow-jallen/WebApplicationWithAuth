@@ -227,6 +227,9 @@ namespace WebApplicationWithAuth.Migrations
                     b.Property<string>("FoodName")
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Notes")
                         .HasColumnType("text");
 

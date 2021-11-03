@@ -1,22 +1,14 @@
-﻿@page
+﻿@page "{PartyName}"
 @model WebApplicationWithAuth.Pages.Parties.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Party.Name;
 }
 
-<h1>Details</h1>
+<h1>@Model.Party.Name</h1>
 
 <div>
-    <h4>Party</h4>
-    <hr />
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Party.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Party.Name)
-        </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Party.Location)
         </dt>
@@ -30,28 +22,89 @@
             @Html.DisplayFor(model => model.Party.StartsOn)
         </dd>
     </dl>
-    <h5>Sign-Ups:</h5>
-    @foreach (var signup in Model.Party.SignUps)
-    {
-        <strong>@signup.Name</strong>
-        <h6>Food Assignments</h6>
-        @if (signup.FoodAssignments.Any())
+    <div>
+        <h2 class="text-center">Sign-Ups:</h2>
+        @foreach (var signup in Model.Party.SignUps)
         {
-            <ul class="ml-3">
-                @foreach (var foodAssignment in signup.FoodAssignments)
+            <div class="mt-4 border p-2">
+                <h4><strong>@signup.Name</strong>'s Food Assignments:</h4>
+                @if (signup.FoodAssignments.Any(fa => fa.IsDeleted == false))
                 {
-                    <li>
-                        @foodAssignment.FoodName (@foodAssignment.Quantity @foodAssignment.Units)
-                        <p class="ml-3">@foodAssignment.Notes</p>
-                    </li>
+                    <ul class="ml-3">
+                        @foreach (var foodAssignment in signup.FoodAssignments.Where(fa => fa.IsDeleted == false))
+                        {
+                            <li>
+                                <form method="post">
+                                    @foodAssignment.FoodName (@foodAssignment.Quantity @foodAssignment.Units)
+                                    <button asp-page-handler="DeleteAssignment" asp-route-assignmentId="@foodAssignment.Id" asp-route-partyName="@Model.Party.Name">❌</button>
+                                </form>
+                                <p class="ml-3">@foodAssignment.Notes</p>
+                            </li>
+
+                        }
+                    </ul>
                 }
-            </ul>
+                else
+                {
+                    <div>No food assignments...yet.</div>
+                }
+
+                <div class="accordion" id="@("accordion"+signup.Id)">
+                    <div class="accordion-item">
+                        <h6 class="accordion-header" id="@("heading"+signup.Id)">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#@("collapse"+signup.Id)" aria-expanded="true" aria-controls="@("collapse"+signup.Id)">
+                                Add Food Assignment
+                            </button>
+                        </h6>
+                        <div id="@("collapse"+signup.Id)" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+
+                                <form method="post">
+                                    <input type="hidden" name="signupId" value="@signup.Id" />
+                                    <input type="hidden" name="partyName" value="@Model.Party.Name" />
+                                    <div class="mb-3 row">
+                                        <div class="col-sm-4 text-sm-end align-self-center">
+                                            <label class="form-label" asp-for="NewFoodAssignment.FoodName"></label>
+                                        </div>
+                                        <div class="col">
+                                            <input class="form-control" asp-for="NewFoodAssignment.FoodName" asp-items="Html.GetEnumSelectList<FoodOption>()" />
+                                            <span class="form-text" asp-validation-for="NewFoodAssignment.FoodName" />
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <div class="col-sm-4 text-sm-end align-self-center">
+                                            <label class="form-label" asp-for="NewFoodAssignment.Quantity"></label>
+                                        </div>
+                                        <div class="col">
+                                            <input class="form-control" asp-for="NewFoodAssignment.Quantity" asp-items="Html.GetEnumSelectList<FoodOption>()" />
+                                            <span class="form-text" asp-validation-for="NewFoodAssignment.Quantity" />
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <div class="col-sm-4 text-sm-end align-self-center">
+                                            <label class="form-label" asp-for="NewFoodAssignment.Units"></label>
+                                        </div>
+                                        <div class="col">
+                                            <input class="form-control" asp-for="NewFoodAssignment.Units" asp-items="Html.GetEnumSelectList<FoodOption>()" />
+                                            <span class="form-text" asp-validation-for="NewFoodAssignment.Units" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4 text-sm-end align-self-center">
+                                        </div>
+                                        <div class="col-8">
+                                            <button type="submit" class="btn btn-outline-primary">Add Food Assignment</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-        else
-        { 
-            <div>No food assignments...yet.</div>
-        }
-    }
+    </div>
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Party.Id">Edit</a> |
