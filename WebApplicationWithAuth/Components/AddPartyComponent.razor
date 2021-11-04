@@ -1,0 +1,39 @@
+﻿@using WebApplicationWithAuth.Data
+@using Microsoft.AspNetCore.Components.Forms
+@inject ApplicationDbContext dbContext
+
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                🎈 Add a new Party 🎉
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <label for="name">Party Name</label>
+                <input type="text" id="name" @bind="@partyName" />
+                @*<br />
+                <label for="location">Location</label>
+                <InputText Value="location" />
+                <br />
+                <label for="startsOn">Starts On</label>
+                <InputDate Value="startsOn" />*@
+                <br />
+                <button @onclick="addParty">Add Party</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    private string partyName;
+    private string location;
+    private DateTime startsOn;
+
+    public async Task addParty()
+    {
+        partyName = partyName.ToUpper();
+    }
+}
