@@ -43,7 +43,7 @@ namespace WebApplicationWithAuth
             services.AddControllers();
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(AuthPolicies.IsAdmin, (policyBuilder) => 
+                options.AddPolicy(AuthPolicies.IsAdmin, (policyBuilder) =>
                     policyBuilder.RequireClaim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress", Configuration["adminEmail"]));
             });
         }

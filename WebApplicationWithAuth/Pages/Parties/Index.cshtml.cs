@@ -32,14 +32,6 @@ namespace WebApplicationWithAuth.Pages.Parties
 
         public async Task OnPostAsync()
         {
-            if(IsAdmin)
-            {
-
-            }
-            else
-            {
-                return Page();
-            }
         }
     }
 }

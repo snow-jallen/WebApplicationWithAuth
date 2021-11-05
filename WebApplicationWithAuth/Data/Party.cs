@@ -10,5 +10,6 @@ namespace WebApplicationWithAuth.Data
         public string Location { get; set; }
         public DateTime StartsOn { get; set; }
         public List<SignUp> SignUps { get; set; }
+        public string LastEditedBy { get; set; }
     }
 }
