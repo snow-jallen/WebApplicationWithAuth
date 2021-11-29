@@ -19,7 +19,7 @@ namespace WebApplicationWithAuth.Pages
 
         public void OnGet()
         {
-
+            _logger.LogInformation("Getting index page from {user} on {timestamp}", User, DateTime.Now);
         }
     }
 }
